@@ -50,6 +50,11 @@
       color: #003344;
     }
 
+    h3 {
+      margin-top: 30px;
+      color: #005577;
+    }
+
     pre {
       background-color: #f0f0f0;
       padding: 10px;
@@ -60,6 +65,13 @@
 
     code {
       font-family: Consolas, monospace;
+    }
+
+    p.note {
+      margin-top: -10px;
+      margin-bottom: 20px;
+      font-style: italic;
+      color: #555;
     }
   </style>
 </head>
@@ -100,6 +112,86 @@ nano /var/www/html/index.html
 Install-WindowsFeature Web-Server -IncludeManagementTools
 cd /inetpub/wwwroot/
 notepad index.html
+  </code></pre>
+
+  <hr>
+
+  <h2>🌐 Hálózati konfiguráció összefoglaló</h2>
+
+  <h3>🔹 IP-címzés és interfészek</h3>
+  <p class="note">Interfész IP-címének beállítása és aktiválása.</p>
+  <pre><code>
+enable
+configure terminal
+hostname [név]
+interface [pl. Gig0/0 vagy vlan1]
+ip address [IP] [maszk]
+no shutdown
+exit
+  </code></pre>
+
+  <h3>🔹 Statikus útvonal</h3>
+  <p class="note">Manuálisan megadott útvonal egy másik hálózat felé.</p>
+  <pre><code>
+ip route [cél hálózat] [maszk] [next-hop IP]
+  </code></pre>
+
+  <h3>🔹 VLAN és Trunk</h3>
+  <p class="note">VLAN létrehozása és hozzárendelése porthoz. Trunk: több VLAN átengedése.</p>
+  <pre><code>
+vlan [szám]
+name [név]
+interface [pl. f0/1]
+switchport mode access
+switchport access vlan [szám]
+switchport mode trunk
+  </code></pre>
+
+  <h3>🔹 DHCP beállítás routeren</h3>
+  <p class="note">Automatikus IP-cím kiosztás konfigurálása.</p>
+  <pre><code>
+ip dhcp pool [név]
+network [hálózat] [maszk]
+default-router [gateway IP]
+dns-server [IP]
+  </code></pre>
+
+  <h3>🔹 NAT konfiguráció</h3>
+  <p class="note">Belső IP-címek átalakítása nyilvános címekké.</p>
+  <pre><code>
+access-list 1 permit [belső hálózat]
+ip nat inside source list 1 interface [kifelé néző interfész] overload
+interface [pl. g0/0]
+ip nat inside
+interface [pl. g0/1]
+ip nat outside
+  </code></pre>
+
+  <h3>🔹 ACL – Access Control List</h3>
+  <p class="note">Forgalom szűrése: engedélyezés vagy tiltás IP vagy port szerint.</p>
+  <pre><code>
+access-list 101 permit ip [src] [wildcard] [dst] [wildcard]
+access-list 101 deny tcp any any eq 80
+interface [pl. g0/0]
+ip access-group 101 in
+  </code></pre>
+
+  <h3>🔹 ASA tűzfal beállítás</h3>
+  <p class="note">Biztonsági szintek és szabályok megadása az ASA tűzfalon.</p>
+  <pre><code>
+interface vlan [szám]
+nameif [inside/outside]
+security-level [0–100]
+ip address [IP] [maszk]
+access-list [név] extended permit tcp any any eq 80
+access-group [név] in interface outside
+  </code></pre>
+
+  <h3>🔹 Egyéb parancsok</h3>
+  <p class="note">Egyéb gyakori vagy szükséges beállítások.</p>
+  <pre><code>
+clock rate 64000
+write memory
   </code></pre>
 
 </body>
