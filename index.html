@@ -3,6 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <title>Vizsga Jegyzetek</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 40px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #004466;
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    a {
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    hr {
+      margin: 40px 0;
+      border: none;
+      height: 1px;
+      background-color: #ccc;
+    }
+
+    h2 {
+      background-color: #e0f0ff;
+      padding: 10px;
+      border-left: 5px solid #3399cc;
+      color: #003344;
+    }
+
+    pre {
+      background-color: #f0f0f0;
+      padding: 10px;
+      overflow-x: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+  </style>
 </head>
 <body>
   <h1>Jegyzetek</h1>
@@ -11,5 +70,37 @@
     <li><a href="https://drive.google.com/file/d/1kzX6ENnuJiMz_32sjKLuHcvNW3991pPk/view?usp=drive_link" target="_blank">Linux</a></li>
     <li><a href="https://drive.google.com/file/d/1SMXnd5lGihZIj51moJk1G7OA2OSbzLz9/view?usp=drive_link" target="_blank">Virtuális gép</a></li>
   </ul>
+
+  <hr>
+
+  <h2>🖥️ Linux webszerver beállítása</h2>
+  <pre><code>
+sudo bash
+apt update
+apt install apache2 -y
+rm /var/www/html/index.html
+nano /var/www/html/index.html
+  </code></pre>
+
+  <p><strong>index.html tartalma:</strong></p>
+  <pre><code>&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;Készítette: "név"&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+  </code></pre>
+
+  <hr>
+
+  <h2>🪟 Windows webszerver beállítása</h2>
+  <pre><code>
+Install-WindowsFeature Web-Server -IncludeManagementTools
+cd /inetpub/wwwroot/
+notepad index.html
+  </code></pre>
+
 </body>
 </html>
